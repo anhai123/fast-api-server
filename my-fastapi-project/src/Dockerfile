@@ -1,12 +1,9 @@
-# chatbot_api/Dockerfile
-
 FROM python:3.11-slim
 
 WORKDIR /app
-COPY ./my-fastapi-project/src/ /app
+COPY ./src/ /app
 
-COPY ./pyproject.toml /code/pyproject.toml
-RUN pip install /code/.
+RUN chmod +x entrypoint.sh
+RUN pip install -r requirements.txt
 
-EXPOSE 8000
 CMD ["sh", "entrypoint.sh"]
