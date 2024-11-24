@@ -1,13 +1,9 @@
 from langchain_community.chat_models import ChatOpenAI
-from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
+from langchain_core.prompts import ChatPromptTemplate
 import os
-from langchain.prompts import ChatPromptTemplate
 from operator import itemgetter
-from langchain.schema.output_parser import StrOutputParser
 from langchain.schema.runnable import RunnableLambda, RunnablePassthrough
 from jobProcessingService import search_by_user_query
-from langchain.output_parsers import ResponseSchema
-from langchain.output_parsers import StructuredOutputParser
 
 # Retrieve OpenAI API key from environment variables
 open_ai_key = os.environ['OPENAI_API_KEY']
@@ -40,8 +36,6 @@ retrieval_augmented_qa_chain = (
     | RunnablePassthrough.assign(context=itemgetter("context"))
     | {"response": prompt | _model, "context": itemgetter("context")}
 )
-
-
 
 if __name__ == "__main__":
     question = "What is RAG?"
