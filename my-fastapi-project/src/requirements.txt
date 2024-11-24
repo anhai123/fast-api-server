@@ -18,3 +18,7 @@ python-dotenv==1.0.1
 ragas==0.2.5
 pandas==2.2.3
 nltk==3.8.1
+apscheduler==3.10.4
+typing-extensions==4.12.2
+typing-inspect==0.9.0
+drissionpage==4.1.0.6

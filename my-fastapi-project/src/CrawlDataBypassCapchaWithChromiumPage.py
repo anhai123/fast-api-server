@@ -1,26 +1,8 @@
 import json
 import random
 import time
-from bs4 import BeautifulSoup
-from selenium import webdriver
-from selenium.webdriver.chrome.service import Service
-from webdriver_manager.chrome import ChromeDriverManager
-
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.common.by import By
-from selenium.common.exceptions import TimeoutException, NoSuchElementException, InvalidArgumentException, ElementClickInterceptedException
-from selenium.webdriver.chrome.options import Options
-from underthesea import word_tokenize
-import numpy as np
-from openai import OpenAI
-import os
-from qdrant_client.http.models import PointStruct
-from selenium_stealth import stealth
-import undetected_chromedriver as uc
-from loguru import logger
 from DrissionPage import ChromiumPage
-from DrissionPage.errors import ElementNotFoundError
+from DrissionPage.errors import ElementNotFoundError, CanNotClickError
 from jobProcessingService import load_jobs_from_file, insert_jobs_into_qdrant
 import uuid
 # from fp.fp import FreeProxy
@@ -184,7 +166,7 @@ def crawl_contents(filename, company_block):
                     continue
 
                 link_element.click()
-            except ElementClickInterceptedException:
+            except CanNotClickError:
                 print("Element click intercepted, skipping to next block.")
                 continue
         except ElementNotFoundError:
