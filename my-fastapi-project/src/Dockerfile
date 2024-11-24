@@ -1,14 +1,12 @@
-# Sets the working directory inside the container to /app
+# chatbot_api/Dockerfile
+
+FROM python:3.11-slim
+
 WORKDIR /app
+COPY ./my-fastapi-project/src/ /app
 
-# Copies all the contents from the current directory (which is src in this case) to the /app directory inside the container
-COPY . /app
+COPY ./my-fastapi-project/pyproject.toml /code/pyproject.toml
+RUN pip install /code/.
 
-# Makes the entrypoint.sh script executable
-RUN chmod +x entrypoint.sh
-
-# Installs the required Python packages
-RUN pip install -r requirements.txt
-
-# Specifies the command to run when the container starts
+EXPOSE 8000
 CMD ["sh", "entrypoint.sh"]
